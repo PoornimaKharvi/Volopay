@@ -6,7 +6,7 @@ import BlockedCards from "./BlockedCards";
 import { Tab, Nav } from "react-bootstrap";
 import FilterCard from "../common/FilterCard";
 import { BiFilter } from "react-icons/bi";
-// import PaginationComp from "../common/PaginationComp";
+import PaginationComp from "../common/PaginationComp";
 
 function CardTabs({ allData }) {
   const [searchCards, setSearchCards] = useState("");
@@ -16,23 +16,22 @@ function CardTabs({ allData }) {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    console.log("Tab changed:", tab);
     setPageNo(0);
   };
 
   const handleInputChange = (e) => {
     setSearchCards(e.target.value);
   };
-  const handlePaginationClick = (page) => {
-    console.log("handlePaginationClick", page);
-    setPageNo(page);
-  };
 
   const handleFilterOpen = () => {
     setfilterOpen(true);
   };
+  const handlePaginationClick = (page) => {
+    setPageNo(page);
+  };
+
   useEffect(() => {
-    console.log(allData, "allData 1");
+    console.log(allData, "allData");
   }, []);
 
   return (
@@ -80,14 +79,14 @@ function CardTabs({ allData }) {
               />
             </Tab.Pane>
             <Tab.Pane eventKey="All cards">
-              <MyCards
+              <AllCards
                 cards={allData}
                 searchCards={searchCards}
                 PageNo={PageNo}
               />
             </Tab.Pane>
             <Tab.Pane eventKey="Blocked cards">
-              <MyCards
+              <BlockedCards
                 cards={allData}
                 searchCards={searchCards}
                 PageNo={PageNo}
@@ -96,9 +95,12 @@ function CardTabs({ allData }) {
           </Tab.Content>
         </Tab.Container>
       </div>
-      {/* <div style={{ display: "flex", justifyContent: "center" }}>
-        <PaginationComp className="card-tabs-footer" />
-      </div> */}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <PaginationComp
+          handlePageClick={handlePaginationClick}
+          className="card-tabs-footer"
+        />
+      </div>
       <FilterCard filterOpen={filterOpen} setfilterOpen={setfilterOpen} />
     </div>
   );

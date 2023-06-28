@@ -1,12 +1,26 @@
-import React, { useEffect } from "react";
-import CardData from "../card/CardData";
-function AllCards({ cards }) {
+import CardData from "../common/CardData";
+import React, { useEffect, useState } from "react";
+
+function AllCards({ cards, searchCards, PageNo }) {
+  const [mycards, setmycards] = useState([]);
+
+  const getFilteredCards = (cards) => {
+    const filteredCards = cards
+      .filter((val) =>
+        val.name.toLowerCase().includes(searchCards.toLowerCase())
+      )
+      .slice(0 + PageNo, PageNo + 10);
+
+    setmycards(filteredCards);
+  };
+
   useEffect(() => {
-    console.log(cards, "allcards");
-  }, []);
+    getFilteredCards(cards);
+  }, [cards, searchCards, PageNo]);
+
   return (
     <div>
-      <CardData mycards={cards} />
+      <CardData mycards={mycards} />
     </div>
   );
 }

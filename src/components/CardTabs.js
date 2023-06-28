@@ -6,25 +6,34 @@ import BlockedCards from "./BlockedCards";
 import { Tab, Nav } from "react-bootstrap";
 import FilterCard from "../common/FilterCard";
 import { BiFilter } from "react-icons/bi";
-import PaginationComp from "../common/PaginationComp";
+// import PaginationComp from "../common/PaginationComp";
 
 function CardTabs({ allData }) {
   const [searchCards, setSearchCards] = useState("");
   const [filterOpen, setfilterOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("My cards");
+  const [PageNo, setPageNo] = useState(0);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     console.log("Tab changed:", tab);
+    setPageNo(0);
   };
 
   const handleInputChange = (e) => {
     setSearchCards(e.target.value);
   };
+  const handlePaginationClick = (page) => {
+    console.log("handlePaginationClick", page);
+    setPageNo(page);
+  };
 
   const handleFilterOpen = () => {
     setfilterOpen(true);
   };
+  useEffect(() => {
+    console.log(allData, "allData 1");
+  }, []);
 
   return (
     <div
@@ -64,20 +73,32 @@ function CardTabs({ allData }) {
 
           <Tab.Content>
             <Tab.Pane eventKey="My cards">
-              <MyCards cards={allData} searchCards={searchCards} />
+              <MyCards
+                cards={allData}
+                searchCards={searchCards}
+                PageNo={PageNo}
+              />
             </Tab.Pane>
             <Tab.Pane eventKey="All cards">
-              <AllCards cards={allData} searchCards={searchCards} />
+              <MyCards
+                cards={allData}
+                searchCards={searchCards}
+                PageNo={PageNo}
+              />
             </Tab.Pane>
             <Tab.Pane eventKey="Blocked cards">
-              <BlockedCards cards={allData} searchCards={searchCards} />
+              <MyCards
+                cards={allData}
+                searchCards={searchCards}
+                PageNo={PageNo}
+              />
             </Tab.Pane>
           </Tab.Content>
         </Tab.Container>
       </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      {/* <div style={{ display: "flex", justifyContent: "center" }}>
         <PaginationComp className="card-tabs-footer" />
-      </div>
+      </div> */}
       <FilterCard filterOpen={filterOpen} setfilterOpen={setfilterOpen} />
     </div>
   );

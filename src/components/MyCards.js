@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from "react";
-import CardData from "../card/CardData";
+import CardData from "../common/CardData";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function MyCards({ cards }) {
+function MyCards({ cards, searchCards, PageNo }) {
   const [mycards, setmycards] = useState([]);
+  const [filterData, setfilterData] = useState([]);
   const [ownerId, setownerId] = useState(2);
 
-  const getDatas = (cards) => {
-    cards.map((val) => {
-      if (val.owner_id === ownerId) {
-        mycards.push(val);
-      }
+  const getFilteredCards = (cards) => {
+    const filteredCards = cards.filter((val) => {
+      return val.owner_id === ownerId;
     });
+    setmycards(filteredCards);
+    filteredData();
+  };
+  const filteredData = () => {
+    const filteredCards = mycards
+      .filter((val) =>
+        val.name.toLowerCase().includes(searchCards.toLowerCase())
+      )
+      .slice(0 + PageNo, PageNo + 10);
+
+    setfilterData(filteredCards);
   };
 
   useEffect(() => {
-    if (mycards.length == 0) getDatas(cards);
-  }, [cards]);
-
+    console.log(PageNo, "PageNo");
+    getFilteredCards(cards);
+  }, [cards, searchCards, PageNo]);
   return (
     <div>
-      <CardData mycards={mycards} />
+      <CardData mycards={filterData} />
     </div>
   );
 }

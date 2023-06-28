@@ -1,5 +1,8 @@
-import React from "react";
-function BlockedCards() {
+import React, { useEffect } from "react";
+function BlockedCards({ cards }) {
+  useEffect(() => {
+    console.log(cards, "blocked cards");
+  }, []);
   return (
     <div>
       <h1>BlockedCards</h1>

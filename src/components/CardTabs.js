@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import "bootstrap/dist/css/bootstrap.min.css";
+import MyCards from "./MyCards";
+import AllCards from "./AllCards";
+import BlockedCards from "./BlockedCards";
 
 // import { IoFilterSharp } from 'react-icons/io';
-
 function CardTabs({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
-
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -25,8 +26,10 @@ function CardTabs({ onSearch }) {
           onChange={handleInputChange}
           placeholder="search here"
         />
-        <button onClick={handleSearch}>Search</button>
-        <button>filter</button>
+        {/* <button class="search" onClick={handleSearch}>Search</button> */}
+        <button class="filter">
+          <i class="fa fa-filter"></i> Filter
+        </button>
       </div>
 
       <Tabs
@@ -35,17 +38,16 @@ function CardTabs({ onSearch }) {
         className="mb-3"
       >
         <Tab eventKey="home" title="Your cards">
-          Tab content for Home
+          <MyCards />
         </Tab>
         <Tab eventKey="profile" title="All cards">
-          Tab content for Profile
+          <AllCards />
         </Tab>
         <Tab eventKey="contact" title="Blocked cards">
-          Tab content for Contact
+          <BlockedCards />
         </Tab>
       </Tabs>
     </div>
   );
 }
-
 export default CardTabs;
